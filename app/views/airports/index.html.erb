@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+<h1>Airports</h1>
+<table>
+  <thead>
+    <tr>
+      <th> Airport code: </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @airports.each do |apt| %>
+      <tr>
+        <td><%= link_to "#{apt.aptcode}" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
