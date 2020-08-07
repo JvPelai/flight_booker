@@ -2,6 +2,7 @@
 <h1>Flights</h1>
 <%= render 'form'%>
 <% if @available_flights.any?%>
+  <h3>Choose a flight!</h3>
   <table>
     <thead>
       <tr>
@@ -12,18 +13,22 @@
       </tr>
     </thead>
     <tbody>
-      <% @available_flights.each do |flight| %>
-        <tr>
-          <td><%= flight.from_airport.aptcode %>
-            <td><%= flight.to_airport.aptcode %>
-              <td><%= flight.duration%>
-                <td><%= flight.flight_date_formatted%>
-                  <td><%=link_to 'Book flight' %>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
-            <br>
-          <% else %>
-            <h3>No Results</h3>
-          <% end %>
+      <%= form_with url: new_booking_path, local: true, method: 'get' do%>
+        <%= hidden_field_tag(:num_passengers, params[:num_passengers])%>
+        <% @available_flights.each do |flight| %>
+          <tr>
+            <td><%= flight.from_airport.aptcode %>
+              <td><%= flight.to_airport.aptcode %>
+                <td><%= flight.duration%>
+                  <td><%= flight.flight_date_formatted%>
+                    <td><%=radio_button_tag(:flight_id, flight.id) %>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+              <%= submit_tag 'Book flight(s)'%>
+              <br>
+            <% end %>
+          <%end%>
+          <br>
+          <%= link_to 'Show Bookings', bookings_url %>

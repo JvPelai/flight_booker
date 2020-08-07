@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+<h1>Bookings</h1>
+<% @bookings.each do |b| %>
+  <h3>Passengers:</h3>
+  <% b.passengers.each do|p| %>
+    <%= "#{p.name}"%><br>
+  <% end %>
+  <table>
+    <thead>
+      <tr>
+        <th> Departure</th>
+        <th>Destination</th>
+        <th> duration </th>
+        <th> date </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><%= "#{b.flight.from_airport.aptcode}" %></td>
+        <td><%= "#{b.flight.to_airport.aptcode} " %></td>
+        <td><%=  "#{b.flight.duration} hours" %></td>
+        <td><%= "#{b.flight.departure_time}" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<%= link_to 'New Booking', root_path %>

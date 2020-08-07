@@ -5,6 +5,8 @@
     <%=f.select(:from_airport_id, options_for_select(@airports)) %><br>
     <%=f.label :to_airport_id%>
     <%=f.select(:to_airport_id, options_for_select(@airports)) %><br>
+    <%= f.label 'number_of_passengers'%>
+    <%= f.select(:num_passengers, options_for_select([1,2,3,4,5,6]))%><br>
     <%= f.label :month%>
     <%= f.select(:month,options_for_select(@months))%> <br>
     <%= f.label :day%>

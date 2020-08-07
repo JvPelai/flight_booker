@@ -1,0 +1,24 @@
+<%= form_with(model: @booking, local: true) do |f| %>
+  <% if @booking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+      <ul>
+        <% @booking.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%=f.hidden_field(:flight_id, value: params[:flight_id])%>
+  <%=f.hidden_field(:num_passengers, value: params[:num_passengers])%>
+  <%= f.fields_for :passengers do |pf| %>
+    <p><%="Passenger #{pf.index + 1}:"%></p>
+    <%= pf.label 'Name: '%>
+    <%= pf.text_field :name %>
+    <%= pf.label 'Email' %>
+    <%= pf.text_field :email%>
+  <% end %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
