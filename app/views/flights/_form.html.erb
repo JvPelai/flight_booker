@@ -2,13 +2,13 @@
 <%= form_with(url: '/flights', method: :get, local: true) do |f| %>
   <div>
     <%=f.label :from_airport%><br>
-    <%=f.select(:from_airport, options_for_select(@airports)) %><br>
-    <%=f.label :to_airport%>
-    <%=f.select(:to_airport, options_for_select(@airports)) %><br>
+    <%=f.select(:from_airport_id, options_for_select(@airports)) %><br>
+    <%=f.label :to_airport_id%>
+    <%=f.select(:to_airport_id, options_for_select(@airports)) %><br>
     <%= f.label :month%>
     <%= f.select(:month,options_for_select(@months))%> <br>
     <%= f.label :day%>
-    <%= f.select(:days,options_for_select(@days))%> <br>
+    <%= f.select(:day,options_for_select(@days))%> <br>
   </div>
   <div class="actions">
     <%= f.submit "Search" %>

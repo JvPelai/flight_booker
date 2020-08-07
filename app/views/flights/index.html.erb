@@ -1,26 +1,29 @@
 <p id="notice"><%= notice %></p>
 <h1>Flights</h1>
 <%= render 'form'%>
-<% if params[:flight]%>
+<% if @available_flights.any?%>
   <table>
     <thead>
       <tr>
         <th>Departure</th>
         <th>destination</th>
+        <th>Duration</th>
         <th>Departure time</th>
       </tr>
     </thead>
     <tbody>
-      <% @flights.each do |flight| %>
+      <% @available_flights.each do |flight| %>
         <tr>
           <td><%= flight.from_airport.aptcode %>
             <td><%= flight.to_airport.aptcode %>
-              <td><%= flight.flight_date_formatted%>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-        <br>
-      <% else %>
-        <h3>No Results</h3>
-      <% end %>
+              <td><%= flight.duration%>
+                <td><%= flight.flight_date_formatted%>
+                  <td><%=link_to 'Book flight' %>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+            <br>
+          <% else %>
+            <h3>No Results</h3>
+          <% end %>
