@@ -1,17 +1,16 @@
-<%= form_with(model: flight, local: true) do |form| %>
-  <% if flight.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(flight.errors.count, "error") %> prohibited this flight from being saved:</h2>
-
-      <ul>
-      <% flight.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= form.submit %>
+<h3>Search for a flight</h3>
+<%= form_with(url: '/flights', method: :get, local: true) do |f| %>
+  <div>
+    <%=f.label :from_airport%><br>
+    <%=f.select(:from_airport, options_for_select(@airports)) %><br>
+    <%=f.label :to_airport%>
+    <%=f.select(:to_airport, options_for_select(@airports)) %><br>
+    <%= f.label :month%>
+    <%= f.select(:month,options_for_select(@months))%> <br>
+    <%= f.label :day%>
+    <%= f.select(:days,options_for_select(@days))%> <br>
   </div>
-<% end %>
+  <div class="actions">
+    <%= f.submit "Search" %>
+  </div>
+<%end%>
