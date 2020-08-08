@@ -6,10 +6,10 @@
   <table>
     <thead>
       <tr>
-        <th>Departure</th>
-        <th>destination</th>
-        <th>Duration</th>
-        <th>Departure time</th>
+        <th colspan="6">Departure location</th>
+        <th colspan="6">destination</th>
+        <th colspan="6">Duration</th>
+        <th colspan="6">Departure Date</th>
       </tr>
     </thead>
     <tbody>
@@ -17,11 +17,11 @@
         <%= hidden_field_tag(:num_passengers, params[:num_passengers])%>
         <% @available_flights.each do |flight| %>
           <tr>
-            <td><%= flight.from_airport.aptcode %>
-              <td><%= flight.to_airport.aptcode %>
-                <td><%= flight.duration%>
-                  <td><%= flight.flight_date_formatted%>
-                    <td><%=radio_button_tag(:flight_id, flight.id) %>
+            <td colspan="6"><%= "#{flight.from_airport.location}" %>
+              <td colspan="6"><%= "#{flight.to_airport.location}" %>
+                <td colspan="6"><%= flight.duration%>
+                  <td colspan="6"><%= flight.flight_date_formatted%>
+                    <td colspan="6"><%=radio_button_tag(:flight_id, flight.id) %>
                     </tr>
                   <% end %>
                 </tbody>
@@ -29,6 +29,42 @@
               <%= submit_tag 'Book flight(s)'%>
               <br>
             <% end %>
-          <%end%>
-          <br>
-          <%= link_to 'Show Bookings', bookings_url %>
+          <%else%>
+            <h3>Choose a flight!</h3>
+            <p>No matching results, here are the next fligths: </p>
+            <table>
+              <thead>
+                <tr>
+                  <th colspan="6">Departure location</th>
+                  <th colspan="6">destination</th>
+                  <th colspan="6">Duration</th>
+                  <th colspan="6">Departure Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <%= form_with url: new_booking_path, local: true, method: 'get' do%>
+                  <%= hidden_field_tag(:num_passengers, params[:num_passengers])%>
+                  <% @flights.each do |flight| %>
+                    <tr>
+                      <td colspan="6"><%= "#{flight.from_airport.location}" %>
+                        <td colspan="6"><%= "#{flight.to_airport.location}" %>
+                          <td colspan="6"><%= flight.duration%>
+                            <td colspan="6"><%= flight.flight_date_formatted%>
+                              <td colspan="6"><%=radio_button_tag(:flight_id, flight.id) %>
+                              </tr>
+                            <% end %>
+                          </tbody>
+                        </table>
+                        <%= submit_tag 'Book flight(s)'%>
+                        <br>
+                      <% end %>
+                    <%end%>
+                    <br>
+                    <div>
+                      <%unless @page == 0%>
+                        <%= link_to "Last Page", flights_path(page: @page - 1)%>
+                      <%end%>
+                      |
+                      <%= link_to "Next Page", flights_path(page: @page + 1)%>
+                    </div>
+                    <%= link_to 'Show Bookings', bookings_url %>

@@ -5,23 +5,46 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.fir
-=begin
-airports = ['SFO', 'NYC', 'STL', 'AST','CGO']
 
-airports.each do |code|
-  Airport.create(aptcode: code)
+
+
+
+  
+
+Passenger.delete_all
+Booking.delete_all
+Flight.delete_all
+Airport.delete_all
+
+ActiveRecord::Base.connection.tables.each do |t|
+  ActiveRecord::Base.connection.reset_pk_sequence!(t)
 end
 
-i = airports.length
-while i > 1 do
-  Flight.create(from_airport_id: i,to_airport_id: i-1, departure_time: "2020-#{'%02d'%(1+9)}-#{'%02d'%(6+1)} #{'%02d'%(4+rand(16))}:#{rand(6)}0:00", duration: rand(2..8))
-  i-=1 
+airports = {'SFO' => 'San Francisco', 'NYC' => 'New York', 'STL'=> 'Seattle',
+   'AST'=> 'Austin','CGO' => 'Chigago', 'LAS' => 'Los Angeles', 'HKG'=> 'Hong Kong',
+  'WDC' => 'Washington D.C', 'TKO' => 'Tokyo', 'SYD' => 'Sydney', 'SPO' => 'São Paulo',
+'RJO' => 'Rio de Janeiro', 'BLM' => 'Berlim', 'LSB' => 'Lisboa', 'LDN' => 'London'}
+
+airports.each do |code, location|
+  Airport.create(aptcode: code, location: location)
 end
-Flight.create(from_airport_id: 1,to_airport_id: 5, departure_time: "2020-#{'%02d'%(1+9)}-#{'%02d'%(6+1)} #{'%02d'%(4+rand(16))}:#{rand(6)}0:00", duration: rand(2..8))
-=end
+
+6.times do
+  i = airports.length
+  while i > 1 do
+    Flight.create(from_airport_id: i,to_airport_id: i-1, departure_time: Time.now + rand(100000..100000000), duration: rand(2..14))
+    i-=1 
+  end
+  Flight.create(from_airport_id: i,to_airport_id: airports.length, departure_time: Time.now + rand(100000..100000000), duration: rand(2..14))
+
+  2000.times do
+    Flight.create(from_airport_id: rand(airports.length),to_airport_id: rand(airports.length), departure_time: Time.now + rand(100000..100000000), duration: rand(2..14))
+  end
+end
+
 Flight.all.map do |f|
   f.month = f.departure_time.month
   f.day = f.departure_time.day
+  f.year = f.departure_time.year 
   f.save 
 end
-
