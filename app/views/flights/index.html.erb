@@ -60,6 +60,9 @@
                       <% end %>
                     <%end%>
                     <br>
+                    <%for i in 0..11 %>
+                      <%= link_to "#{@page + i}", flights_path(page: @page +i)%>
+                    <% end %>
                     <div>
                       <%unless @page == 0%>
                         <%= link_to "Last Page", flights_path(page: @page - 1)%>
