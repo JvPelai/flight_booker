@@ -6,11 +6,15 @@ h1,
 h3,
 th {
   color: teal;
+
 }
+
+
 
 .search_form {
   display: grid;
   grid-template-columns: 1fr 13fr;
   grid-template-rows: auto auto auto;
   color: teal;
+  display: flex;
 }
