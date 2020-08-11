@@ -1,24 +1,10 @@
-# README
+# Odin Flight Booker
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A mock site for searching and booking flights on a specific date.
 
-Things you may want to cover:
+This project is part of the-odin-project's fullstack ruby on rails curriculum.
 
-* Ruby version
 
-* System dependencies
 
-* Configuration
 
-* Database creation
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
